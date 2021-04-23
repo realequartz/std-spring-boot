@@ -1,0 +1,1 @@
+mysql -u root -proot mudi < /mysql-db/mudi.sql

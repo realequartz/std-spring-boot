@@ -1,0 +1,30 @@
+version: "3"
+services:
+
+    db:
+        build: 
+            dockerfile: ./mysql-database/mysql.dockerfile
+            context: .
+        image: mysql/mudi # nome da imagem que será construída
+        container_name: mudi-db
+        ports: 
+            - "3307:3306"
+        networks: 
+            - project-network
+    
+    spring-mudi:
+        build:
+            dockerfile: ./openjdk.dockerfile
+            context: .
+        container_name: mudi-spring
+        ports: 
+            - "8080:8080"
+        networks: 
+            - project-network
+        depends_on: 
+            - "db"
+        restart: on-failure
+    
+networks:
+    project-network:
+        driver: bridge
